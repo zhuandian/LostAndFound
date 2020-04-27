@@ -14,7 +14,9 @@
         <activity android:name=".business.activity.LostAndFoundDetailActivity"></activity>
         <activity android:name=".business.activity.ReleaseBookActivity" />
         <activity android:name=".business.activity.ReleaseLostAndFoundActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
