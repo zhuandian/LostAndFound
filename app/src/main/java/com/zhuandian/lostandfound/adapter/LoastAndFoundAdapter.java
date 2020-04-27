@@ -1,11 +1,14 @@
 package com.zhuandian.lostandfound.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.view.View;
 import android.widget.TextView;
 
 import com.zhuandian.base.BaseAdapter;
 import com.zhuandian.base.BaseViewHolder;
 import com.zhuandian.lostandfound.R;
+import com.zhuandian.lostandfound.business.activity.LostAndFoundDetailActivity;
 import com.zhuandian.lostandfound.entity.LostAndFoundEntity;
 
 import java.util.List;
@@ -42,6 +45,14 @@ public class LoastAndFoundAdapter extends BaseAdapter<LostAndFoundEntity, BaseVi
         tvTime.setText(lostAndFoundEntity.getCreatedAt());
         tvReleaseUser.setText("发布人：" + lostAndFoundEntity.getUserEntity().getUsername());
         tvType.setText(lostAndFoundEntity.getType() == 1 ? "丢失" : "捡到");
+        myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, LostAndFoundDetailActivity.class);
+                intent.putExtra("entity",lostAndFoundEntity);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override

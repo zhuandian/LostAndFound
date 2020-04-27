@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".business.activity.ReleaseBookActivity"></activity>
+        <activity android:name=".business.activity.LostAndFoundDetailActivity"></activity>
+        <activity android:name=".business.activity.ReleaseBookActivity" />
         <activity android:name=".business.activity.ReleaseLostAndFoundActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
