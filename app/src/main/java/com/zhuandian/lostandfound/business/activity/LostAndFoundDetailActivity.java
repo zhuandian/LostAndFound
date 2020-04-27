@@ -32,6 +32,7 @@ import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 public class LostAndFoundDetailActivity extends BaseActivity {
 
@@ -47,8 +48,8 @@ public class LostAndFoundDetailActivity extends BaseActivity {
     TextView tvContent;
     @BindView(R.id.tv_time)
     TextView tvTime;
-    @BindView(R.id.tv_release_user)
-    TextView tvReleaseUser;
+    @BindView(R.id.tv_like_count)
+    TextView tvLikeCount;
     @BindView(R.id.tv_type)
     TextView tvType;
     @BindView(R.id.comment_listview)
@@ -77,7 +78,7 @@ public class LostAndFoundDetailActivity extends BaseActivity {
         tvContentTitle.setText(lostAndFoundEntity.getTitle());
         tvContent.setText(lostAndFoundEntity.getContent());
         tvTime.setText(lostAndFoundEntity.getCreatedAt());
-        tvReleaseUser.setText("发布人：" + lostAndFoundEntity.getUserEntity().getUsername());
+        tvLikeCount.setText("点赞数：" + lostAndFoundEntity.getLikeCount());
         tvType.setText(lostAndFoundEntity.getType() == 1 ? "丢失" : "捡到");
 
         userCommentAdapter = new MessageCommentAdapter(commentDatas, this);
@@ -115,7 +116,7 @@ public class LostAndFoundDetailActivity extends BaseActivity {
 
 
     }
-    @OnClick({R.id.iv_back, R.id.submit_comment, R.id.fab})
+    @OnClick({R.id.iv_back, R.id.submit_comment, R.id.fab,R.id.tv_like_count})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -128,7 +129,24 @@ public class LostAndFoundDetailActivity extends BaseActivity {
                 submitCommentLayout.setVisibility(View.VISIBLE);
                 fab.setVisibility(View.GONE);
                 break;
+
+            case R.id.tv_like_count:
+                updateLikeCount();
+                break;
         }
+    }
+
+    private void updateLikeCount() {
+        int likeCount = lostAndFoundEntity.getLikeCount();
+        lostAndFoundEntity.setLikeCount(likeCount+1);
+        lostAndFoundEntity.update(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if (e==null){
+                    tvLikeCount.setText("点赞数："+(likeCount+1));
+                }
+            }
+        });
     }
 
     private void submitUserComment() {

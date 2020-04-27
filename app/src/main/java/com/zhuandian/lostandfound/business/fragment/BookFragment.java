@@ -97,6 +97,7 @@ public class BookFragment extends BaseFragment {
         BmobQuery<BookEntity> query = new BmobQuery<>();
         query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
         query.order("-updatedAt");
+        query.include("userEntity");
         query.setLimit(10);
         query.setSkip(currentCount);
         query.findObjects(new FindListener<BookEntity>() {

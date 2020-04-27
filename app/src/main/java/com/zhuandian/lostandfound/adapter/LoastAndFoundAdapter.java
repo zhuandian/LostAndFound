@@ -28,8 +28,8 @@ public class LoastAndFoundAdapter extends BaseAdapter<LostAndFoundEntity, BaseVi
     TextView tvContent;
     @BindView(R.id.tv_time)
     TextView tvTime;
-    @BindView(R.id.tv_release_user)
-    TextView tvReleaseUser;
+    @BindView(R.id.tv_like_count)
+    TextView tvLikeCount;
     @BindView(R.id.tv_type)
     TextView tvType;
 
@@ -43,7 +43,7 @@ public class LoastAndFoundAdapter extends BaseAdapter<LostAndFoundEntity, BaseVi
         tvTitle.setText(lostAndFoundEntity.getTitle());
         tvContent.setText(lostAndFoundEntity.getContent());
         tvTime.setText(lostAndFoundEntity.getCreatedAt());
-        tvReleaseUser.setText("发布人：" + lostAndFoundEntity.getUserEntity().getUsername());
+        tvLikeCount.setText("点赞数：" + lostAndFoundEntity.getLikeCount());
         tvType.setText(lostAndFoundEntity.getType() == 1 ? "丢失" : "捡到");
         myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
