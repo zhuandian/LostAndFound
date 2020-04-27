@@ -1,17 +1,23 @@
 package com.zhuandian.lostandfound.adapter;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zhuandian.base.BaseAdapter;
 import com.zhuandian.base.BaseViewHolder;
 import com.zhuandian.lostandfound.R;
 import com.zhuandian.lostandfound.entity.BookEntity;
+import com.zhuandian.lostandfound.entity.UserEntity;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * @author xiedong
@@ -39,6 +45,23 @@ public class BookAdapter extends BaseAdapter<BookEntity, BaseViewHolder> {
         tvContent.setText(bookEntity.getContent());
         tvTime.setText(bookEntity.getCreatedAt());
         tvReleaseUser.setText("发布人：" + bookEntity.getUserEntity().getUsername());
+
+        if (BmobUser.getCurrentUser(UserEntity.class).getType() == 1) {
+            myViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    bookEntity.delete(new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if (e == null) {
+                                Toast.makeText(mContext, "删除成功...", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                    return true;
+                }
+            });
+        }
     }
 
     @Override

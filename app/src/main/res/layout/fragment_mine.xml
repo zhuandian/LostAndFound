@@ -27,19 +27,29 @@
             android:text="昵称"
             android:textColor="@color/white"
             android:textSize="18sp" />
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_nick_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="1551230321"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
 
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/tv_history"
+        android:id="@+id/tv_lost"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="30dp"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
-        android:text="取件记录" />
+        android:text="丢失物品列表" />
 
     <View
         android:layout_width="match_parent"
@@ -48,13 +58,27 @@
         android:layout_marginRight="10dp" />
 
     <TextView
-        android:id="@+id/tv_overdue"
+        android:id="@+id/tv_found"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
-        android:text="逾期查询" />
+        android:text="捡到物品列表" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+
+    <TextView
+        android:id="@+id/tv_book"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="正能量" />
 
 
     <TextView

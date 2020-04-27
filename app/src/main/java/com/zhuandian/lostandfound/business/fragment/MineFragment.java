@@ -13,7 +13,7 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.zhuandian.base.BaseFragment;
-
+import com.zhuandian.lostandfound.MainActivity;
 import com.zhuandian.lostandfound.R;
 import com.zhuandian.lostandfound.business.PersonalDataActivity;
 import com.zhuandian.lostandfound.business.login.LoginActivity;
@@ -37,6 +37,18 @@ public class MineFragment extends BaseFragment {
     CircleImageView ivHeader;
     @BindView(R.id.tv_nick_name)
     TextView tvNickName;
+    @BindView(R.id.tv_phone)
+    TextView tvPhone;
+    @BindView(R.id.tv_lost)
+    TextView tvLost;
+    @BindView(R.id.tv_found)
+    TextView tvFound;
+    @BindView(R.id.tv_book)
+    TextView tvBook;
+    @BindView(R.id.tv_more_setting)
+    TextView tvMoreSetting;
+    @BindView(R.id.tv_logout)
+    TextView tvLogout;
     private SharedPreferences sharedPreferences;
 
 
@@ -56,21 +68,25 @@ public class MineFragment extends BaseFragment {
         UserEntity userEntity = BmobUser.getCurrentUser(UserEntity.class);
         if (userEntity != null) {
             tvNickName.setText(userEntity.getNikeName() == null ? userEntity.getUsername() : userEntity.getNikeName());
+            tvPhone.setText(userEntity.getMobilePhoneNumber());
         }
     }
 
-    @OnClick({R.id.iv_header, R.id.tv_nick_name, R.id.tv_more_setting, R.id.tv_logout, R.id.tv_history, R.id.tv_overdue})
+    @OnClick({R.id.iv_header, R.id.tv_nick_name, R.id.tv_more_setting, R.id.tv_logout,R.id.tv_lost, R.id.tv_found, R.id.tv_book})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_header:
                 PictureSelectorUtils.selectImg(PictureSelector.create(this), 1);
                 break;
-//            case R.id.tv_history:
-//                startActivity(new Intent(actitity, ExpressHistoryActivity.class));
-//                break;
-//            case R.id.tv_overdue:
-//                startActivity(new Intent(actitity, OverdueExpressActivity.class));
-//                break;
+            case R.id.tv_lost:
+                ((MainActivity) actitity).setCurrentPage(MainActivity.PAGE_LOST);
+                break;
+            case R.id.tv_found:
+                ((MainActivity) actitity).setCurrentPage(MainActivity.PAGE_FOUND);
+                break;
+            case R.id.tv_book:
+                ((MainActivity) actitity).setCurrentPage(MainActivity.PAGE_BOOK);
+                break;
             case R.id.tv_more_setting:
                 startActivity(new Intent(actitity, PersonalDataActivity.class));
                 break;

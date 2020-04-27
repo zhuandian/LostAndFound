@@ -4,17 +4,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zhuandian.base.BaseAdapter;
 import com.zhuandian.base.BaseViewHolder;
 import com.zhuandian.lostandfound.R;
 import com.zhuandian.lostandfound.business.activity.LostAndFoundDetailActivity;
 import com.zhuandian.lostandfound.entity.LostAndFoundEntity;
+import com.zhuandian.lostandfound.entity.UserEntity;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * @author xiedong
@@ -49,10 +55,28 @@ public class LoastAndFoundAdapter extends BaseAdapter<LostAndFoundEntity, BaseVi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, LostAndFoundDetailActivity.class);
-                intent.putExtra("entity",lostAndFoundEntity);
+                intent.putExtra("entity", lostAndFoundEntity);
                 mContext.startActivity(intent);
             }
         });
+
+
+        if (BmobUser.getCurrentUser(UserEntity.class).getType() == 1) {
+            myViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    lostAndFoundEntity.delete(new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if (e == null) {
+                                Toast.makeText(mContext, "删除成功...", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                    return true;
+                }
+            });
+        }
     }
 
     @Override
