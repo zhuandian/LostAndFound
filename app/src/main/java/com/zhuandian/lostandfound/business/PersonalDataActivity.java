@@ -19,10 +19,10 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
 
 public class PersonalDataActivity extends BaseActivity {
-    @BindView(R.id.et_nick_name)
-    EditText etNickName;
-    @BindView(R.id.et_user_password)
-    EditText etUserPassword;
+    @BindView(R.id.et_old_password)
+    EditText etOldPassword;
+    @BindView(R.id.et_new_password)
+    EditText etNewPassword;
     @BindView(R.id.tv_submit)
     TextView tvSubmit;
     @BindView(R.id.iv_back)
@@ -38,10 +38,9 @@ public class PersonalDataActivity extends BaseActivity {
 
     @Override
     protected void setUpView() {
-        tvTitle.setText("修改资料");
+        tvTitle.setText("修改密码");
         userEntity = BmobUser.getCurrentUser(UserEntity.class);
-        etNickName.setText(userEntity.getNikeName() == null ? userEntity.getUsername() : userEntity.getNikeName());
-        etUserPassword.setText(userEntity.getUserInfo() == null ? "" : userEntity.getUserInfo());
+
     }
 
 
@@ -52,22 +51,21 @@ public class PersonalDataActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_submit:
-                if (!TextUtils.isEmpty(etNickName.getText().toString()) || !TextUtils.isEmpty(etUserPassword.getText().toString())) {
-                    userEntity.setNikeName(etNickName.getText().toString());
-                    //用户输入密码长度大于1时才可修改密码，不输入密码则只修改用户昵称
-                    if (etUserPassword.getText().toString().length() > 1) {
-                        userEntity.setPassword(etUserPassword.getText().toString());
-                    }
-                    userEntity.update(new UpdateListener() {
-                        @Override
-                        public void done(BmobException e) {
-                            if (e == null) {
-                                finish();
-                                Toast.makeText(PersonalDataActivity.this, "更新成功，重启生效...", Toast.LENGTH_SHORT).show();
-                            }
+
+                String oldPassword = etOldPassword.getText().toString();
+                String newPassword = etNewPassword.getText().toString();
+
+                BmobUser.updateCurrentUserPassword(oldPassword, newPassword, new UpdateListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        if (e==null){
+                            Toast.makeText(PersonalDataActivity.this, "修改成功，重启生效", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(PersonalDataActivity.this, "请确保旧密码是否输入正确...", Toast.LENGTH_SHORT).show();
                         }
-                    });
-                }
+
+                    }
+                });
                 break;
         }
     }

@@ -1,6 +1,8 @@
 package com.zhuandian.lostandfound.business.login;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -65,6 +67,9 @@ public class LoginActivity   extends BaseActivity {
                 @Override
                 public void done(UserEntity userEntity, BmobException e) {
                     if (e == null) {
+                        SharedPreferences sharedPreferences = getSharedPreferences("config", Context.MODE_PRIVATE);
+                        sharedPreferences.edit().putString("userName",userName).commit();
+                        sharedPreferences.edit().putString("password",passWord).commit();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
                     } else {

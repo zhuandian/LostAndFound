@@ -46,10 +46,13 @@ public class BookAdapter extends BaseAdapter<BookEntity, BaseViewHolder> {
         tvTime.setText(bookEntity.getCreatedAt());
         tvReleaseUser.setText("发布人：" + bookEntity.getUserEntity().getUsername());
 
-        if (BmobUser.getCurrentUser(UserEntity.class).getType() == 1) {
-            myViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
+        myViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+
+                UserEntity currentUser = BmobUser.getCurrentUser(UserEntity.class);
+                if (currentUser.getType() == 1||currentUser.getObjectId() .equals(bookEntity.getUserEntity().getObjectId()) ) {
                     bookEntity.delete(new UpdateListener() {
                         @Override
                         public void done(BmobException e) {
@@ -58,10 +61,17 @@ public class BookAdapter extends BaseAdapter<BookEntity, BaseViewHolder> {
                             }
                         }
                     });
-                    return true;
+                }else {
+                    Toast.makeText(mContext, "无删除权限...", Toast.LENGTH_SHORT).show();
                 }
-            });
-        }
+
+
+
+                return true;
+            }
+        });
+
+
     }
 
     @Override

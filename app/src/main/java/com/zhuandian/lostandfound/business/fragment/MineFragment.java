@@ -16,6 +16,7 @@ import com.zhuandian.base.BaseFragment;
 import com.zhuandian.lostandfound.MainActivity;
 import com.zhuandian.lostandfound.R;
 import com.zhuandian.lostandfound.business.PersonalDataActivity;
+import com.zhuandian.lostandfound.business.activity.ManageUserActivity;
 import com.zhuandian.lostandfound.business.login.LoginActivity;
 import com.zhuandian.lostandfound.business.utils.PictureSelectorUtils;
 import com.zhuandian.lostandfound.entity.UserEntity;
@@ -49,6 +50,10 @@ public class MineFragment extends BaseFragment {
     TextView tvMoreSetting;
     @BindView(R.id.tv_logout)
     TextView tvLogout;
+    @BindView(R.id.tv_manage_user)
+    TextView tvManageUser;
+    @BindView(R.id.tv_local)
+    TextView tvLocal;
     private SharedPreferences sharedPreferences;
 
 
@@ -67,12 +72,15 @@ public class MineFragment extends BaseFragment {
         }
         UserEntity userEntity = BmobUser.getCurrentUser(UserEntity.class);
         if (userEntity != null) {
-            tvNickName.setText(userEntity.getNikeName() == null ? userEntity.getUsername() : userEntity.getNikeName());
+            tvNickName.setText((userEntity.getType() == 1 ? "管理员：" : "普通用户：") + userEntity.getUsername());
             tvPhone.setText(userEntity.getMobilePhoneNumber());
+            tvLocal.setText(userEntity.getLocal());
         }
+
+        tvManageUser.setVisibility(userEntity.getType() == 1 ? View.VISIBLE : View.GONE);
     }
 
-    @OnClick({R.id.iv_header, R.id.tv_nick_name, R.id.tv_more_setting, R.id.tv_logout,R.id.tv_lost, R.id.tv_found, R.id.tv_book})
+    @OnClick({R.id.iv_header, R.id.tv_nick_name, R.id.tv_more_setting, R.id.tv_logout, R.id.tv_lost, R.id.tv_found, R.id.tv_book, R.id.tv_manage_user})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_header:
@@ -94,6 +102,9 @@ public class MineFragment extends BaseFragment {
                 startActivity(new Intent(actitity, LoginActivity.class));
                 BmobUser.logOut();
                 actitity.finish();
+                break;
+            case R.id.tv_manage_user:
+                startActivity(new Intent(actitity, ManageUserActivity.class));
                 break;
         }
     }

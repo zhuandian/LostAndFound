@@ -27,9 +27,12 @@ public class UserRegisterActivity extends BaseActivity {
     TextView tvRegister;
     @BindView(R.id.et_phone)
     EditText etPhone;
+    @BindView(R.id.et_local)
+    EditText etLocal;
     private String userName;
     private String passWord;
     private String userPhone;
+    private String userLocal;
 
     @Override
     protected int getLayoutId() {
@@ -51,12 +54,15 @@ public class UserRegisterActivity extends BaseActivity {
         userName = etUsername.getText().toString();
         passWord = etPassword.getText().toString();
         userPhone = etPhone.getText().toString();
-        if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(passWord) || TextUtils.isEmpty(userPhone) ) {
+        userLocal = etLocal.getText().toString();
+        if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(passWord) || TextUtils.isEmpty(userPhone) || TextUtils.isEmpty(userLocal)) {
             Toast.makeText(this, "请完善注册信息...", Toast.LENGTH_SHORT).show();
         } else {
             UserEntity userEntity = new UserEntity();
             userEntity.setUsername(userName);
+            userEntity.setLocal(userLocal);
             userEntity.setPassword(passWord);
+            userEntity.setUserPassword(passWord);
             userEntity.setMobilePhoneNumber(userPhone);
             userEntity.signUp(new SaveListener<Object>() {
                 @Override

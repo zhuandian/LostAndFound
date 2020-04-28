@@ -60,11 +60,12 @@ public class LoastAndFoundAdapter extends BaseAdapter<LostAndFoundEntity, BaseVi
             }
         });
 
+        myViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
 
-        if (BmobUser.getCurrentUser(UserEntity.class).getType() == 1) {
-            myViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
+                UserEntity currentUser = BmobUser.getCurrentUser(UserEntity.class);
+                if (currentUser.getType() == 1||currentUser.getObjectId() .equals(lostAndFoundEntity.getUserEntity().getObjectId()) ) {
                     lostAndFoundEntity.delete(new UpdateListener() {
                         @Override
                         public void done(BmobException e) {
@@ -73,10 +74,15 @@ public class LoastAndFoundAdapter extends BaseAdapter<LostAndFoundEntity, BaseVi
                             }
                         }
                     });
-                    return true;
+                }else {
+                    Toast.makeText(mContext, "无删除权限...", Toast.LENGTH_SHORT).show();
                 }
-            });
-        }
+
+                return true;
+            }
+        });
+
+
     }
 
     @Override

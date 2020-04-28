@@ -11,26 +11,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".business.activity.LostAndFoundDetailActivity"></activity>
+        <activity android:name=".business.activity.ManageUserActivity"></activity>
+        <activity android:name=".business.activity.LostAndFoundDetailActivity" />
         <activity android:name=".business.activity.ReleaseBookActivity" />
         <activity android:name=".business.activity.ReleaseLostAndFoundActivity" />
-        <activity android:name=".MainActivity"
-            android:windowSoftInputMode="adjustPan"
-            >
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan">
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".business.login.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
-
-
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".business.login.UserRegisterActivity" />
         <activity android:name=".business.PersonalDataActivity" />
