@@ -55,17 +55,27 @@ public class PersonalDataActivity extends BaseActivity {
                 String oldPassword = etOldPassword.getText().toString();
                 String newPassword = etNewPassword.getText().toString();
 
-                BmobUser.updateCurrentUserPassword(oldPassword, newPassword, new UpdateListener() {
+
+                userEntity.setUserPassword(newPassword);
+                userEntity.update(new UpdateListener() {
                     @Override
                     public void done(BmobException e) {
                         if (e==null){
-                            Toast.makeText(PersonalDataActivity.this, "修改成功，重启生效", Toast.LENGTH_SHORT).show();
-                        }else {
-                            Toast.makeText(PersonalDataActivity.this, "请确保旧密码是否输入正确...", Toast.LENGTH_SHORT).show();
-                        }
+                            BmobUser.updateCurrentUserPassword(oldPassword, newPassword, new UpdateListener() {
+                                @Override
+                                public void done(BmobException e) {
+                                    if (e==null){
+                                        Toast.makeText(PersonalDataActivity.this, "修改成功，重启生效", Toast.LENGTH_SHORT).show();
+                                    }else {
+                                        Toast.makeText(PersonalDataActivity.this, "请确保旧密码是否输入正确...", Toast.LENGTH_SHORT).show();
+                                    }
 
+                                }
+                            });
+                        }
                     }
                 });
+
                 break;
         }
     }
